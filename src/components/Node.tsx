@@ -11,6 +11,8 @@ import { styled } from "@mui/material/styles";
 import colors from "../constants/colors";
 import Status from "./Status";
 import { Node as NodeType } from "../types/Node";
+import { useDispatch, useSelector } from "react-redux";
+import { getBlocksForNode } from "../reducers/blocks";
 
 type Props = {
   node: NodeType;
@@ -46,6 +48,30 @@ const BoxSummaryContent = styled(Box)({
   paddingRight: 20,
 });
 
+const Blocks = styled(Box)({
+  display: "flex",
+  flexDirection: "column",
+  width: "100%",
+  backgroundColor:"#e0e0e0",
+  marginTop:3,
+  padding:5,
+  borderRadius:2
+});
+
+const BlocksID = styled(Typography)({
+  fontSize: 10,
+  display: "block",
+  color: colors.blue,
+  lineHeight: 1.5,
+});
+
+const BlocksText = styled(Typography)({
+  fontSize: 17,
+  display: "block",
+  color: colors.text,
+  lineHeight: 1.5,
+});
+
 const TypographyHeading = styled(Typography)({
   fontSize: 17,
   display: "block",
@@ -60,11 +86,17 @@ const TypographySecondaryHeading = styled(Typography)(({ theme }) => ({
 }));
 
 const Node: React.FC<Props> = ({ node, expanded, toggleNodeExpanded }) => {
+  const dispatch=useDispatch()
+  const state=useSelector((state:any)=>state.blocks);
+  console.log('State',state)
   return (
     <AccordionRoot
       elevation={3}
       expanded={expanded}
-      onChange={() => toggleNodeExpanded(node)}
+      onChange={() => {
+        dispatch(getBlocksForNode(node))
+        toggleNodeExpanded(node)
+      }}
     >
       <AccordionSummaryContainer expandIcon={<ExpandMoreIcon />}>
         <BoxSummaryContent>
@@ -80,7 +112,23 @@ const Node: React.FC<Props> = ({ node, expanded, toggleNodeExpanded }) => {
         </BoxSummaryContent>
       </AccordionSummaryContainer>
       <AccordionDetails>
-        <Typography>Blocks go here</Typography>
+        {state.isLoading?
+                <Typography>Loading ...</Typography>
+                :
+        state.allBlocks ? state.allBlocks?.data?.map((data:any,id:any)=>(
+          <Blocks>
+            <BlocksID>
+              00{id}
+            </BlocksID>
+            <BlocksText>
+              {data?.attributes?.data}
+            </BlocksText>
+          </Blocks>
+        ))
+        :
+        <Typography>There is no Blocks</Typography>
+
+      }
       </AccordionDetails>
     </AccordionRoot>
   );

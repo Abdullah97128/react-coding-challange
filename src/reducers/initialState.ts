@@ -14,9 +14,9 @@ const initialState = () => ({
         loading: false,
       },
       {
-        url: "https://servername.herokuapp.com", // Deployed local Server
+        url: "https://ancient-headland-67857.herokuapp.com", // Deployed local Server
         online: false,
-        name: "Node 3",
+        name: "Demo Node",
         loading: false,
       },
       {
@@ -27,5 +27,9 @@ const initialState = () => ({
       },
     ],
   },
+  blocks:{
+    isLoading:false,
+    allBlocks:null
+  }
 });
 export default initialState;
