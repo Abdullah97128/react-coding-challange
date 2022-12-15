@@ -3,7 +3,7 @@
 ## Installation
 
 1. `git clone https://github.com/Abdullah97128/react-coding-challange.git`
-2. `cd toy-blocks-client-react`
+2. `cd react-coding-challange`
 3. `nvm use`
 4. `npm i`
 5. `npm start`
