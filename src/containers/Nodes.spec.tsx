@@ -26,11 +26,16 @@ describe("<Nodes />", () => {
     ],
   };
 
+  const blocks={
+    isLoading:false,
+    allBlocks:{"id":"5","type":"blocks","attributes":{"index":1,"timestamp":1530679678,"data":"The Human Car","previous-hash":"KsmmdGrKVDr43/OYlM/oFzr7oh6wHG+uM9UpRyIoVe8=","hash":"oHkxOJWOKy02vA9r4iRHVqTgqT+Afc6OYFcNYzyhGEc="}}
+  }
+
   let store: MockStoreEnhanced<unknown, {}>;
 
   function setup(): JSX.Element {
     const middlewares = [thunk];
-    store = configureMockStore(middlewares)({ nodes });
+    store = configureMockStore(middlewares)({ nodes,blocks });
     return (
       <Provider store={store}>
         <ConnectedNodes />

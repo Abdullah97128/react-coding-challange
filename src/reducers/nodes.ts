@@ -37,6 +37,8 @@ export const nodesSlice = createSlice({
       if (node) node.loading = true;
     });
     builder.addCase(checkNodeStatus.fulfilled, (state, action) => {
+
+      console.log("action.meta.arg.url",action.meta.arg.url)
       const node = state.list.find((n) => n.url === action.meta.arg.url);
       if (node) {
         node.online = true;
